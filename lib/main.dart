@@ -505,44 +505,28 @@ class DashboardTab extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 96),
       children: [
-        Row(
-          children: [
-            Expanded(
-              child: MetricCard(
-                label: 'Open items',
-                value: controller.openCount.toString(),
-                icon: Icons.timelapse_outlined,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: MetricCard(
-                label: 'High priority',
-                value: urgent.length.toString(),
-                icon: Icons.priority_high_outlined,
-              ),
-            ),
-          ],
+        MetricCard(
+          label: 'Open items',
+          value: controller.openCount.toString(),
+          icon: Icons.timelapse_outlined,
         ),
-        const SizedBox(height: 12),
-        Row(
-          children: [
-            Expanded(
-              child: MetricCard(
-                label: 'Patients',
-                value: controller.openCountFor(RecordType.patient).toString(),
-                icon: RecordType.patient.icon,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: MetricCard(
-                label: 'Shipments',
-                value: controller.openCountFor(RecordType.shipment).toString(),
-                icon: RecordType.shipment.icon,
-              ),
-            ),
-          ],
+        const SizedBox(height: 10),
+        MetricCard(
+          label: 'High priority',
+          value: urgent.length.toString(),
+          icon: Icons.priority_high_outlined,
+        ),
+        const SizedBox(height: 10),
+        MetricCard(
+          label: 'Patients',
+          value: controller.openCountFor(RecordType.patient).toString(),
+          icon: RecordType.patient.icon,
+        ),
+        const SizedBox(height: 10),
+        MetricCard(
+          label: 'Shipments',
+          value: controller.openCountFor(RecordType.shipment).toString(),
+          icon: RecordType.shipment.icon,
         ),
         const SizedBox(height: 20),
         Text('Priority board', style: theme.textTheme.titleLarge),
@@ -606,19 +590,29 @@ class MetricCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        child: Row(
           children: [
-            Icon(icon, color: colorScheme.primary),
-            const SizedBox(height: 16),
+            CircleAvatar(
+              backgroundColor: colorScheme.primary.withValues(alpha: 0.12),
+              foregroundColor: colorScheme.primary,
+              child: Icon(icon, size: 22),
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Text(
+                label,
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+              ),
+            ),
             Text(
               value,
               style: Theme.of(
                 context,
-              ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w800),
+              ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800),
             ),
-            Text(label, style: Theme.of(context).textTheme.bodyMedium),
           ],
         ),
       ),
@@ -1512,6 +1506,18 @@ List<OperationRecord> sampleRecords() {
     ),
     OperationRecord(
       id: 'sample-2',
+      type: RecordType.attendance,
+      title: 'Evening intake desk',
+      owner: 'South desk',
+      details:
+          'Coverage confirmed for reception and intake. Night handoff pending.',
+      status: 'Scheduled',
+      priority: 'Normal',
+      targetDate: 'May 11, 2026',
+      createdAt: base.add(const Duration(minutes: 12)),
+    ),
+    OperationRecord(
+      id: 'sample-3',
       type: RecordType.patient,
       title: 'Case BL-204',
       owner: 'J. Martin',
@@ -1523,7 +1529,18 @@ List<OperationRecord> sampleRecords() {
       createdAt: base.add(const Duration(minutes: 20)),
     ),
     OperationRecord(
-      id: 'sample-3',
+      id: 'sample-4',
+      type: RecordType.patient,
+      title: 'Case BL-207',
+      owner: 'M. Garnier',
+      details: 'Lab packet received. Waiting for physician review.',
+      status: 'Waiting',
+      priority: 'Normal',
+      targetDate: 'May 11, 2026',
+      createdAt: base.add(const Duration(minutes: 28)),
+    ),
+    OperationRecord(
+      id: 'sample-5',
       type: RecordType.maintenance,
       title: 'Cold room sensor check',
       owner: 'Facilities',
@@ -1535,7 +1552,29 @@ List<OperationRecord> sampleRecords() {
       createdAt: base.add(const Duration(minutes: 40)),
     ),
     OperationRecord(
-      id: 'sample-4',
+      id: 'sample-6',
+      type: RecordType.maintenance,
+      title: 'Reception printer queue',
+      owner: 'IT support',
+      details: 'Clear stalled labels and confirm print station is ready.',
+      status: 'Open',
+      priority: 'Normal',
+      targetDate: 'May 11, 2026',
+      createdAt: base.add(const Duration(minutes: 52)),
+    ),
+    OperationRecord(
+      id: 'sample-7',
+      type: RecordType.maintenance,
+      title: 'Lift inspection note',
+      owner: 'Building team',
+      details: 'Inspection vendor requested access confirmation before noon.',
+      status: 'Resolved',
+      priority: 'Low',
+      targetDate: 'May 10, 2026',
+      createdAt: base.subtract(const Duration(hours: 2)),
+    ),
+    OperationRecord(
+      id: 'sample-8',
       type: RecordType.shipment,
       title: 'Shipment JL-8842',
       owner: 'Route C',
@@ -1547,7 +1586,7 @@ List<OperationRecord> sampleRecords() {
       createdAt: base.add(const Duration(hours: 1)),
     ),
     OperationRecord(
-      id: 'sample-5',
+      id: 'sample-9',
       type: RecordType.patient,
       title: 'Case BL-208',
       owner: 'A. Legrand',
@@ -1558,7 +1597,7 @@ List<OperationRecord> sampleRecords() {
       createdAt: base.subtract(const Duration(days: 1)),
     ),
     OperationRecord(
-      id: 'sample-6',
+      id: 'sample-10',
       type: RecordType.shipment,
       title: 'Supply return SR-19',
       owner: 'Central depot',
@@ -1567,6 +1606,17 @@ List<OperationRecord> sampleRecords() {
       priority: 'High',
       targetDate: 'May 12, 2026',
       createdAt: base.add(const Duration(hours: 2)),
+    ),
+    OperationRecord(
+      id: 'sample-11',
+      type: RecordType.shipment,
+      title: 'Lab courier LC-53',
+      owner: 'Route A',
+      details: 'Courier checked in. Cold-pack chain verified at dispatch.',
+      status: 'Delivered',
+      priority: 'Low',
+      targetDate: 'May 11, 2026',
+      createdAt: base.add(const Duration(hours: 3)),
     ),
   ];
 }
