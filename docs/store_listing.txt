@@ -1,0 +1,13 @@
+App name
+BACHELIER JEAN LUC
+
+Short description
+Track daily attendance, patient service records, maintenance work, and shipments on one device.
+
+Full description
+BACHELIER JEAN LUC helps small operations teams keep daily work organized without accounts, cloud sync, or external services. Staff can record attendance, patient service handoffs, facility maintenance requests, and shipment progress in a clear local workflow.
+
+Each work stream has focused lists, status updates, priority labels, and detail views so teams can review what is open, what is urgent, and what is already completed. Workspace settings and records stay on the Android device.
+
+Category
+Productivity
