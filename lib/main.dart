@@ -534,7 +534,7 @@ class DashboardTab extends StatelessWidget {
         if (urgent.isEmpty)
           const EmptyState(
             icon: Icons.check_circle_outline,
-            title: 'No high priority items',
+            title: 'BACHELIER JEAN LUC',
             message: 'New records marked high priority will appear here.',
           )
         else
